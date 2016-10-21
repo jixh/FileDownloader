@@ -3,6 +3,7 @@ package demo;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -45,27 +46,32 @@ public class MainActivity extends Activity {
         addbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View showview = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_layout, null);
-                nameText = (EditText) showview.findViewById(R.id.file_name);
-                urlText = (EditText) showview.findViewById(R.id.file_url);
-                new AlertDialog.Builder(MainActivity.this).setView(showview).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if ("".equals(nameText.getText().toString()) || "".equals(urlText.getText().toString())) {
-                            Toast.makeText(MainActivity.this, "请输入文件名和下载路径", Toast.LENGTH_SHORT).show();
-                        } else {
-                            TaskInfo info = new TaskInfo();
-                            info.setFileName(nameText.getText().toString());
-                            /*服务器一般会有个区分不同文件的唯一ID，用以处理文件重名的情况*/
-                            info.setTaskID(nameText.getText().toString());
-                            info.setOnDownloading(true);
-                            /*将任务添加到下载队列，下载器会自动开始下载*/
-                            manager.addTask(nameText.getText().toString(), urlText.getText().toString(), nameText.getText().toString());
-                            adapter.addItem(info);
-                        }
-                    }
-                }).setNegativeButton("取消", null).show();
+                TaskInfo taskInfo = new TaskInfo();
+                taskInfo.setDownloadURL("http://shield.tigermed.mobi:8181/shell/Shell.apk");
+                taskInfo.setTaskID("shell_01");
 
+                new CheckUpdateHelper(MainActivity.this,taskInfo);
+
+//                View showview = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_layout, null);
+//                nameText = (EditText) showview.findViewById(R.id.file_name);
+//                urlText = (EditText) showview.findViewById(R.id.file_url);
+//                new AlertDialog.Builder(MainActivity.this).setView(showview).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        if ("".equals(nameText.getText().toString()) || "".equals(urlText.getText().toString())) {
+//                            Toast.makeText(MainActivity.this, "请输入文件名和下载路径", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            TaskInfo info = new TaskInfo();
+//                            info.setFileName(nameText.getText().toString());
+//                            /*服务器一般会有个区分不同文件的唯一ID，用以处理文件重名的情况*/
+//                            info.setTaskID(nameText.getText().toString());
+//                            info.setOnDownloading(true);
+//                            /*将任务添加到下载队列，下载器会自动开始下载*/
+//                            manager.addTask(nameText.getText().toString(), urlText.getText().toString(), nameText.getText().toString());
+//                            adapter.addItem(info);
+//                        }
+//                    }
+//                }).setNegativeButton("取消", null).show();
             }
         });
 
@@ -92,7 +98,10 @@ public class MainActivity extends Activity {
             }
         });
 
+
     }
+
+    public static final String url = "http://shield.tigermed.mobi:8181/shell/Shell.apk";
 
     Handler handler = new Handler(){
         @Override
@@ -110,4 +119,9 @@ public class MainActivity extends Activity {
         }
     };
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(true);
+    }
 }

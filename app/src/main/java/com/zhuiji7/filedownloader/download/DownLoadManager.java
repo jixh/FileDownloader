@@ -90,6 +90,7 @@ public class DownLoadManager {
         }else{
             sqlDownloadInfoList = datakeeper.getUserDownLoadInfo(userID);
         }
+
         if (sqlDownloadInfoList.size() > 0) {
             int listSize = sqlDownloadInfoList.size();
             for (int i = 0; i < listSize; i++) {

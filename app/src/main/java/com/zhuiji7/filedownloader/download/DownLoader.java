@@ -7,6 +7,7 @@ import android.os.Message;
 import com.zhuiji7.filedownloader.download.dbcontrol.DataKeeper;
 import com.zhuiji7.filedownloader.download.dbcontrol.FileHelper;
 import com.zhuiji7.filedownloader.download.dbcontrol.bean.SQLDownLoadInfo;
+import com.zhuiji7.filedownloader.download.notification.NotificationHelper;
 
 import java.io.File;
 import java.io.InputStream;
@@ -17,6 +18,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.ThreadPoolExecutor;
+
+import demo.SingleTask;
 
 /**
  * 类功能描述：下载执行类，每一个 DataKeeper对象 代表一个下载任务</br>
@@ -425,7 +428,7 @@ public class DownLoader {
     public interface DownLoadSuccess{
         public void onTaskSeccess(String TaskID);
     }
-    
+
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {

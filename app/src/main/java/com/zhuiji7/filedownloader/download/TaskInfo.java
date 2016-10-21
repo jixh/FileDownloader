@@ -15,9 +15,19 @@ public class TaskInfo {
     private String fileName;
     private long fileSize = 0;
     private long downFileSize = 0;
+    private String downloadURL;
     public boolean isOnDownloading() {
         return isOnDownloading;
     }
+
+    public String getDownloadURL() {
+        return downloadURL;
+    }
+
+    public void setDownloadURL(String downloadURL) {
+        this.downloadURL = downloadURL;
+    }
+
     public void setOnDownloading(boolean isOnDownloading) {
         this.isOnDownloading = isOnDownloading;
     }
